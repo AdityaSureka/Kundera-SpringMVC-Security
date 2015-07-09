@@ -26,11 +26,9 @@ public class UserDaoImpl implements UserDao {
         entityManagerFactory = Persistence.createEntityManagerFactory("cassandra", propertyMap);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Query q = entityManager.createQuery("select u from User u ",User.class);//where u.username = admin");
-       // q.setParameter("username", username);
-		List<User> users = q.getResultList();
-		System.out.println("WTfffffffffffffffffF"+users.get(1).getUsername());
-        entityManager.close();
+        Query q = entityManager.createQuery("select u from User u where u.username =:username",User.class);//where u.username = admin");
+        q.setParameter("username", username);
+	entityManager.close();
         if (users == null || users.isEmpty())
         {
         	System.out.println("We are fucked");
